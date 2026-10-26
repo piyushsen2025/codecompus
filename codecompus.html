@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCode — Where Students Build</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Syne, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              cyan: '#00f2fe',
+              blue: '#4facfe',
+              violet: '#7f00ff',
+              magenta: '#e100ff',
+              dark: '#070913',
+              surface: '#0b0f20',
+              card: 'rgba(15, 23, 42, 0.65)'
+            }
+          },
+          animation: {
+            'spin-slow': 'spin 20s linear infinite',
+            'spin-reverse': 'spin-reverse 25s linear infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'float-delayed': 'float 6s ease-in-out 3s infinite',
+            'shimmer': 'shimmer 2.5s infinite',
+          },
+          keyframes: {
+            'spin-reverse': {
+              '0%': { transform: 'rotate(360deg)' },
+              '100%': { transform: 'rotate(0deg)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            shimmer: {
+              '100%': { transform: 'translateX(100%)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070913;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Glassmorphism effects */
+    .glass-card {
+      background: rgba(13, 18, 36, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(79, 172, 254, 0.4);
+      box-shadow: 0 12px 40px 0 rgba(0, 242, 254, 0.18);
+    }
+
+    .glass-nav {
+      background: rgba(7, 9, 19, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Grid Background Pattern */
+    .bg-grid-pattern {
+      background-size: 50px 50px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+
+    /* Text Outline Effect */
+    .text-outline {
+      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.85);
+      color: transparent;
+      transition: all 0.3s ease;
+    }
+    .text-outline:hover {
+      -webkit-text-stroke: 1.5px #00f2fe;
+      color: #00f2fe;
+      text-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+    }
+
+    /* Glowing Orb Animation Container */
+    .orb-ring-1 {
+      border: 1px dashed rgba(0, 242, 254, 0.35);
+    }
+    .orb-ring-2 {
+      border: 1px solid rgba(127, 0, 255, 0.3);
+    }
+
+    /* 3D Cube Perspective */
+    .cube-container {
+      perspective: 1000px;
+    }
+    .cube {
+      width: 64px;
+      height: 64px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 12s infinite linear;
+      transition: transform 0.6s ease;
+    }
+    @keyframes rotateCube {
+      0% { transform: rotateX(15deg) rotateY(0deg); }
+      100% { transform: rotateX(15deg) rotateY(360deg); }
+    }
+    .cube-face {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(0, 242, 254, 0.6);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.3) inset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #00f2fe;
+      font-family: 'Syne', sans-serif;
+    }
+    .front  { transform: translateZ(32px); }
+    .back   { transform: rotateY(180deg) translateZ(32px); }
+    .right  { transform: rotateY(90deg) translateZ(32px); }
+    .left   { transform: rotateY(-90deg) translateZ(32px); }
+    .top    { transform: rotateX(90deg) translateZ(32px); }
+    .bottom { transform: rotateX(-90deg) translateZ(32px); }
+
+    /* Nav Active Pill */
+    .nav-btn {
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .nav-btn.active {
+      color: #00f2fe;
+      font-weight: 700;
+    }
+    .nav-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #00f2fe, #7f00ff);
+      border-radius: 999px;
+      box-shadow: 0 0 8px #00f2fe;
+    }
+
+    /* Page View Fade In */
+    .page-view {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-[#070913] text-slate-100 font-sans min-h-screen flex flex-col overflow-x-hidden relative selection:bg-brand-cyan selection:text-black">
+
+  <!-- Dynamic Ambient Glow Background Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[550px] h-[550px] bg-brand-violet/20 rounded-full blur-[150px] pointer-events-none z-0"></div>
+  <div class="fixed top-[35%] right-[-10%] w-[600px] h-[600px] bg-brand-cyan/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
+  <div class="fixed bottom-[-10%] left-[25%] w-[550px] h-[550px] bg-brand-magenta/15 rounded-full blur-[150px] pointer-events-none z-0"></div>
+
+  <!-- Background Grid Pattern -->
+  <div class="fixed inset-0 bg-grid-pattern opacity-60 pointer-events-none z-0"></div>
+
+  <!-- MAIN NAVIGATION HEADER -->
+  <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="javascript:void(0)" onclick="showSection('home')" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-cyan via-brand-blue to-brand-violet flex items-center justify-center p-[1px] shadow-lg shadow-brand-cyan/20 group-hover:shadow-brand-cyan/40 transition">
+          <div class="w-full h-full bg-[#070913] rounded-[11px] flex items-center justify-center">
+            <span class="font-syne text-lg font-bold bg-gradient-to-r from-brand-cyan to-brand-blue bg-clip-text text-transparent">CC</span>
+          </div>
+        </div>
+        <div>
+          <span class="font-syne text-xl font-extrabold tracking-tight text-white group-hover:text-brand-cyan transition block leading-none">CampusCode</span>
+          <span class="text-[9px] font-mono text-slate-400 tracking-widest uppercase">Ecosystem 3.0</span>
+        </div>
+      </a>
+
+      <!-- Page Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-xs font-mono font-semibold uppercase tracking-wider text-slate-300">
+        <button onclick="showSection('home')" id="nav-home" class="nav-btn active py-1 hover:text-brand-cyan">Home</button>
+        <button onclick="showSection('products')" id="nav-products" class="nav-btn py-1 hover:text-brand-cyan">Products</button>
+        <button onclick="showSection('innovation')" id="nav-innovation" class="nav-btn py-1 hover:text-brand-cyan">Innovation</button>
+        <button onclick="showSection('community')" id="nav-community" class="nav-btn py-1 hover:text-brand-cyan">Community</button>
+        <button onclick="showSection('ideas')" id="nav-ideas" class="nav-btn py-1 hover:text-brand-cyan">Ideas</button>
+        <button onclick="showSection('people')" id="nav-people" class="nav-btn py-1 hover:text-brand-cyan">People</button>
+        <button onclick="showSection('hackathons')" id="nav-hackathons" class="nav-btn py-1 hover:text-brand-cyan flex items-center gap-1.5">
+          Hackathons
+          <span class="px-1.5 py-0.5 text-[9px] font-bold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 rounded-full animate-pulse">LIVE</span>
+        </button>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-4">
+        <button onclick="showSection('login')" class="relative group overflow-hidden rounded-xl p-[1px] font-mono text-xs font-bold uppercase">
+          <span class="absolute inset-0 bg-gradient-to-r from-brand-cyan via-brand-violet to-brand-magenta rounded-xl animate-shimmer"></span>
+          <span class="relative px-5 py-2.5 rounded-[11px] bg-[#070913] transition duration-200 group-hover:bg-transparent flex items-center gap-2 text-white">
+            <i class="fa-solid fa-bolt text-brand-cyan"></i>
+            Login / Join
+          </span>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleMobileNav()" class="lg:hidden text-slate-300 hover:text-white p-2">
+          <i class="fa-solid fa-bars-staggered text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-[#070913]/95 border-b border-slate-800 px-6 py-4 space-y-3 font-mono text-xs font-semibold uppercase">
+      <button onclick="showSection('home'); toggleMobileNav();" class="block w-full text-left py-2 text-slate-300 hover:text-brand-cyan">Home</button>
+      <button onclick="showSection('products'); toggleMobileNav();" class="block w-full text-left py-2 text-slate-300 hover:text-brand-cyan">Products</button>
+      <button onclick="showSection('innovation'); toggleMobileNav();" class="block w-full text-left py-2 text-slate-300 hover:text-brand-cyan">Innovation</button>
+      <button onclick="showSection('community'); toggleMobileNav();" class="block w-full text-left py-2 text-slate-300 hover:text-brand-cyan">Community</button>
+      <button onclick="showSection('ideas'); toggleMobileNav();" class="block w-full text-left py-2 text-slate-300 hover:text-brand-cyan">Ideas</button>
+      <button onclick="showSection('people'); toggleMobileNav();" class="block w-full text-left py-2 text-slate-300 hover:text-brand-cyan">People</button>
+      <button onclick="showSection('hackathons'); toggleMobileNav();" class="block w-full text-left py-2 text-slate-300 hover:text-brand-cyan">Hackathons</button>
+    </div>
+  </header>
+
+  <!-- ================================================================= -->
+  <!-- PAGE 1: HOME (LANDING PAGE WITH 3D CUBE, STATS & HOW IT WORKS) -->
+  <!-- ================================================================= -->
+  <main id="page-home" class="page-view relative z-10 max-w-7xl mx-auto px-6 pt-8 pb-20 flex-1 w-full">
+    
+    <!-- Meta Tag -->
+    <div class="flex items-center gap-3 mb-8">
+      <span class="text-xs font-mono px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan tracking-wider font-semibold">
+        01 • WHAT IS CAMPUSCODE?
+      </span>
+      <div class="h-[1px] w-24 bg-gradient-to-r from-brand-cyan/40 to-transparent"></div>
+    </div>
+
+    <!-- Hero Content & 3D Interactive Hub -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <div class="lg:col-span-7 space-y-6">
+        <h1 class="font-syne text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[0.95] text-white">
+          WHERE <br/>
+          <span class="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">STUDENTS</span> <br/>
+          <span class="text-outline cursor-default">BUILD.</span>
+        </h1>
+
+        <p class="text-slate-300 text-lg sm:text-xl max-w-xl font-normal leading-relaxed">
+          CampusCode brings students, teams, organizers, and hackathons into one connected, AI-driven innovation ecosystem.
+        </p>
+
+        <!-- Hero CTAs -->
+        <div class="pt-2 flex flex-wrap items-center gap-4">
+          <button onclick="showSection('hackathons')" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-blue text-slate-950 font-bold hover:shadow-lg hover:shadow-brand-cyan/30 transition transform hover:-translate-y-0.5 flex items-center gap-3 font-mono text-xs uppercase tracking-wider">
+            <span>Explore Hackathons</span>
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+          </button>
+          <button onclick="showSection('people')" class="px-7 py-3.5 rounded-xl glass-card font-semibold hover:bg-white/10 transition flex items-center gap-2 font-mono text-xs uppercase tracking-wider">
+            <i class="fa-solid fa-user-plus text-brand-cyan"></i>
+            Find a Team
+          </button>
+        </div>
+
+        <!-- Live Builders Activity -->
+        <div class="pt-6 flex items-center gap-6 border-t border-slate-800/80">
+          <div class="flex -space-x-3">
+            <img class="w-9 h-9 rounded-full border-2 border-[#070913] object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="User">
+            <img class="w-9 h-9 rounded-full border-2 border-[#070913] object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="User">
+            <img class="w-9 h-9 rounded-full border-2 border-[#070913] object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="User">
+            <div class="w-9 h-9 rounded-full bg-brand-violet text-white text-xs font-bold border-2 border-[#070913] flex items-center justify-center">+4k</div>
+          </div>
+          <div class="text-xs text-slate-400">
+            <span class="text-white font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              1,240 Builders Online
+            </span>
+            <span>Collaborating across 120+ campuses</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Central Interactive Orbit Ring & 3D Cube -->
+      <div class="lg:col-span-5 relative flex items-center justify-center min-h-[420px]">
+        <div class="absolute w-[360px] h-[360px] sm:w-[420px] sm:h-[420px] rounded-full orb-ring-1 animate-spin-slow flex items-center justify-center">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-brand-cyan rounded-full shadow-[0_0_12px_#00f2fe]"></div>
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-3 h-3 bg-brand-violet rounded-full"></div>
+        </div>
+
+        <div class="absolute w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] rounded-full orb-ring-2 animate-spin-reverse flex items-center justify-center">
+          <div class="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-brand-magenta rounded-full shadow-[0_0_10px_#e100ff]"></div>
+        </div>
+
+        <div class="absolute w-[180px] h-[180px] sm:w-[210px] sm:h-[210px] rounded-full bg-brand-blue/10 border border-brand-cyan/30 animate-pulse-glow flex items-center justify-center"></div>
+
+        <!-- 3D Interactive Cube -->
+        <div class="cube-container z-10 cursor-pointer" onclick="triggerCubePulse()" title="Click to pulse Ecosystem Hub">
+          <div class="cube" id="heroCube">
+            <div class="cube-face front">CC</div>
+            <div class="cube-face back">CC</div>
+            <div class="cube-face right">HUB</div>
+            <div class="cube-face left">CODE</div>
+            <div class="cube-face top">3.0</div>
+            <div class="cube-face bottom">AI</div>
+          </div>
+        </div>
+
+        <!-- Metric Floating Badges -->
+        <div class="absolute top-4 right-2 sm:right-4 glass-card p-3 rounded-2xl animate-float text-xs flex items-center gap-3 border-l-2 border-l-brand-cyan z-20">
+          <div class="p-2 rounded-xl bg-brand-cyan/10 text-brand-cyan">
+            <i class="fa-solid fa-code-commit text-sm"></i>
+          </div>
+          <div>
+            <div class="text-slate-400 font-medium">Live Commits</div>
+            <div class="text-sm font-bold text-white font-mono" id="commitCounter">14,892</div>
+          </div>
+        </div>
+
+        <div class="absolute bottom-4 left-2 sm:left-2 glass-card p-3 rounded-2xl animate-float-delayed text-xs flex items-center gap-3 border-l-2 border-l-brand-magenta z-20">
+          <div class="p-2 rounded-xl bg-brand-magenta/10 text-brand-magenta">
+            <i class="fa-solid fa-trophy text-sm"></i>
+          </div>
+          <div>
+            <div class="text-slate-400 font-medium">Prize Pool Live</div>
+            <div class="text-sm font-bold text-white font-mono">$185,000 USD</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- How It Works (4 Steps Process) -->
+    <section class="mt-24 space-y-8">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div>
+          <span class="text-xs font-mono text-brand-cyan font-semibold tracking-wider uppercase">HOW IT WORKS</span>
+          <h2 class="font-syne text-3xl font-bold text-white mt-1">02 — FROM ZERO TO SHIPPED</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="glass-card p-6 rounded-2xl relative group">
+          <span class="font-mono text-xs font-bold text-brand-cyan bg-brand-cyan/10 px-2.5 py-1 rounded-full">01 DISCOVER</span>
+          <h3 class="font-syne text-xl font-bold text-white mt-4 group-hover:text-brand-cyan transition">Find Challenges</h3>
+          <p class="text-slate-400 text-xs mt-2 leading-relaxed">Browse global hackathons, bounties, and open-source problems matched to your stack.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl relative group">
+          <span class="font-mono text-xs font-bold text-brand-violet bg-brand-violet/20 px-2.5 py-1 rounded-full">02 TEAM UP</span>
+          <h3 class="font-syne text-xl font-bold text-white mt-4 group-hover:text-brand-violet transition">Build Your Squad</h3>
+          <p class="text-slate-400 text-xs mt-2 leading-relaxed">Use AI skill matchmaking to pair with developers, UI designers, and project leads.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl relative group">
+          <span class="font-mono text-xs font-bold text-brand-magenta bg-brand-magenta/20 px-2.5 py-1 rounded-full">03 BUILD</span>
+          <h3 class="font-syne text-xl font-bold text-white mt-4 group-hover:text-brand-magenta transition">Develop & Code</h3>
+          <p class="text-slate-400 text-xs mt-2 leading-relaxed">Access Campus Cloud environments, APIs, and co-pilot code tools instantly.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl relative group">
+          <span class="font-mono text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full">04 SHIP</span>
+          <h3 class="font-syne text-xl font-bold text-white mt-4 group-hover:text-emerald-400 transition">Win & Incubate</h3>
+          <p class="text-slate-400 text-xs mt-2 leading-relaxed">Submit your project, win cash prizes, and secure seed grants from tech sponsors.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Global Stats Counter Bar -->
+    <section class="mt-20 glass-card rounded-3xl p-8 border border-slate-800">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-800/80">
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl sm:text-4xl font-extrabold font-syne text-white font-mono mb-1">120+</div>
+          <div class="text-xs font-semibold text-brand-cyan tracking-wider uppercase font-mono">Global Hackathons</div>
+        </div>
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl sm:text-4xl font-extrabold font-syne text-white font-mono mb-1">8,500+</div>
+          <div class="text-xs font-semibold text-brand-violet tracking-wider uppercase font-mono">Projects Built</div>
+        </div>
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl sm:text-4xl font-extrabold font-syne text-white font-mono mb-1">450+</div>
+          <div class="text-xs font-semibold text-brand-magenta tracking-wider uppercase font-mono">Campus Chapters</div>
+        </div>
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl sm:text-4xl font-extrabold font-syne text-white font-mono mb-1">$1.2M</div>
+          <div class="text-xs font-semibold text-emerald-400 tracking-wider uppercase font-mono">Grants & Prizes</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- PAGE 2: PRODUCTS (ECOSYSTEM DEVELOPER TOOLS) -->
+  <!-- ================================================================= -->
+  <main id="page-products" class="page-view hidden relative z-10 max-w-7xl mx-auto px-6 pt-8 pb-20 flex-1 w-full">
+    <div class="mb-10">
+      <span class="text-xs font-mono px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan tracking-wider font-semibold uppercase">
+        02 • PRODUCTS & DEVELOPER SUITE
+      </span>
+      <h1 class="font-syne text-4xl sm:text-6xl font-extrabold text-white mt-3">INFRASTRUCTURE FOR BUILDERS</h1>
+      <p class="text-slate-400 text-sm max-w-2xl mt-2">Tools designed specifically to run hackathons, manage student dev teams, and deploy cloud instances seamlessly.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Tool 1 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4 relative group">
+        <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan flex items-center justify-center text-xl font-bold">
+          <i class="fa-solid fa-terminal"></i>
+        </div>
+        <h3 class="font-syne text-2xl font-bold text-white group-hover:text-brand-cyan transition">Hackathon Console</h3>
+        <p class="text-slate-400 text-xs leading-relaxed">Complete orchestration platform for organizers. Features live judging rubrics, anti-plagiarism repos scanning, and dynamic leaderboard streaming.</p>
+        <button onclick="openModal('Hackathon Console', 'Initializing demo environment for console admin...')" class="font-mono text-xs font-bold text-brand-cyan hover:underline flex items-center gap-2 pt-2">
+          LAUNCH DEMO <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Tool 2 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4 relative group">
+        <div class="w-12 h-12 rounded-xl bg-brand-violet/20 border border-brand-violet/40 text-brand-violet flex items-center justify-center text-xl font-bold">
+          <i class="fa-solid fa-network-wired"></i>
+        </div>
+        <h3 class="font-syne text-2xl font-bold text-white group-hover:text-brand-violet transition">Team Matcher API</h3>
+        <p class="text-slate-400 text-xs leading-relaxed">AI engine matching student developers by skill taxonomy, timezone availability, and hackathon goal compatibility.</p>
+        <button onclick="openModal('Team Matcher API', 'Fetching API documentation key v3.2...')" class="font-mono text-xs font-bold text-brand-violet hover:underline flex items-center gap-2 pt-2">
+          EXPLORE API DOCS <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Tool 3 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4 relative group">
+        <div class="w-12 h-12 rounded-xl bg-brand-magenta/20 border border-brand-magenta/40 text-brand-magenta flex items-center justify-center text-xl font-bold">
+          <i class="fa-solid fa-cloud"></i>
+        </div>
+        <h3 class="font-syne text-2xl font-bold text-white group-hover:text-brand-magenta transition">Campus Cloud Shell</h3>
+        <p class="text-slate-400 text-xs leading-relaxed">Instant, zero-configuration cloud development environments with pre-installed PyTorch, Node.js, Rust, and GPU credits.</p>
+        <button onclick="openModal('Campus Cloud Shell', 'Provisioning sandbox container with 16GB VRAM...')" class="font-mono text-xs font-bold text-brand-magenta hover:underline flex items-center gap-2 pt-2">
+          START CONTAINER <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- PAGE 3: INNOVATION (PROJECT INCUBATOR & BOUNTIES) -->
+  <!-- ================================================================= -->
+  <main id="page-innovation" class="page-view hidden relative z-10 max-w-7xl mx-auto px-6 pt-8 pb-20 flex-1 w-full">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+      <div>
+        <span class="text-xs font-mono px-3 py-1 rounded-full bg-brand-violet/20 border border-brand-violet/40 text-brand-violet tracking-wider font-semibold uppercase">
+          03 • INNOVATION LABS
+        </span>
+        <h1 class="font-syne text-4xl sm:text-6xl font-extrabold text-white mt-3">SHIPPED STUDENT PROJECTS</h1>
+      </div>
+      <button onclick="openModal('Submit Innovation', 'Submit your open source project or hackathon submission for incubation grants.')" class="px-5 py-3 rounded-xl bg-brand-violet hover:bg-brand-violetHover text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-brand-violet/30">
+        <i class="fa-solid fa-plus"></i> Submit Project
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Project 1 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/30 uppercase">
+            AI Innovation
+          </span>
+          <span class="text-xs font-mono text-emerald-400 font-semibold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Incubating</span>
+        </div>
+
+        <h3 class="font-syne text-2xl font-bold text-white">NeuroCode PR Reviewer</h3>
+        <p class="text-slate-300 text-xs leading-relaxed">Automated pull-request auditing engine that identifies vulnerabilities and optimizes Rust memory management automatically.</p>
+
+        <div class="flex flex-wrap gap-2 pt-2">
+          <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">Rust</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">Gemini 3 Flash</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">Docker</span>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
+          <span class="text-slate-400 font-mono"><i class="fa-solid fa-star text-amber-400"></i> 412 Stars</span>
+          <button onclick="incrementUpvote(this)" class="px-3 py-1.5 rounded-lg bg-brand-cyan/10 text-brand-cyan hover:bg-brand-cyan hover:text-slate-950 font-mono font-bold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-thumbs-up"></i> Upvote (<span class="upvote-count">184</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-brand-magenta/20 text-brand-magenta border border-brand-magenta/40 uppercase">
+            Smart Campus Tech
+          </span>
+          <span class="text-xs font-mono text-emerald-400 font-semibold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Funded $5,000</span>
+        </div>
+
+        <h3 class="font-syne text-2xl font-bold text-white">PeerMesh Meshnet</h3>
+        <p class="text-slate-300 text-xs leading-relaxed">Off-grid peer-to-peer campus communication protocol using Bluetooth LE and LoRa radios during network outages.</p>
+
+        <div class="flex flex-wrap gap-2 pt-2">
+          <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">C++</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">React Native</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">Hardware</span>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
+          <span class="text-slate-400 font-mono"><i class="fa-solid fa-star text-amber-400"></i> 890 Stars</span>
+          <button onclick="incrementUpvote(this)" class="px-3 py-1.5 rounded-lg bg-brand-cyan/10 text-brand-cyan hover:bg-brand-cyan hover:text-slate-950 font-mono font-bold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-thumbs-up"></i> Upvote (<span class="upvote-count">310</span>)
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- PAGE 4: COMMUNITY (GLOBAL CHAPTERS & LEADERBOARD) -->
+  <!-- ================================================================= -->
+  <main id="page-community" class="page-view hidden relative z-10 max-w-7xl mx-auto px-6 pt-8 pb-20 flex-1 w-full">
+    <div class="mb-10">
+      <span class="text-xs font-mono px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan tracking-wider font-semibold uppercase">
+        04 • COMMUNITY NETWORK
+      </span>
+      <h1 class="font-syne text-4xl sm:text-6xl font-extrabold text-white mt-3">GLOBAL CAMPUS CHAPTERS</h1>
+    </div>
+
+    <!-- Leaderboard Table -->
+    <div class="glass-card rounded-2xl overflow-hidden p-6 border border-slate-800">
+      <h3 class="font-syne text-xl font-bold text-white mb-6">Top University Chapters (2026 Season)</h3>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900/80 text-xs font-mono text-slate-400 uppercase border-b border-slate-800">
+            <tr>
+              <th class="p-4">Rank</th>
+              <th class="p-4">University Chapter</th>
+              <th class="p-4">Active Builders</th>
+              <th class="p-4">Hackathon Wins</th>
+              <th class="p-4">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 font-mono">
+            <tr class="hover:bg-white/5 transition">
+              <td class="p-4 font-bold text-brand-cyan">#01</td>
+              <td class="p-4 text-white font-bold font-sans flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-brand-cyan/20 text-brand-cyan flex items-center justify-center font-mono font-bold">SU</div>
+                Stanford University Chapter
+              </td>
+              <td class="p-4 text-slate-300">1,420 Builders</td>
+              <td class="p-4 text-emerald-400 font-bold">38 First Place Wins</td>
+              <td class="p-4">
+                <button onclick="openModal('Stanford Chapter', 'Connecting with Stanford Campus Lead...')" class="px-3 py-1 rounded-lg bg-brand-cyan/10 text-brand-cyan hover:bg-brand-cyan hover:text-slate-950 text-xs font-semibold">Join Chapter</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-white/5 transition">
+              <td class="p-4 font-bold text-slate-300">#02</td>
+              <td class="p-4 text-white font-bold font-sans flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-brand-violet/20 text-brand-violet flex items-center justify-center font-mono font-bold">MIT</div>
+                MIT Hacker Society
+              </td>
+              <td class="p-4 text-slate-300">1,210 Builders</td>
+              <td class="p-4 text-emerald-400 font-bold">32 First Place Wins</td>
+              <td class="p-4">
+                <button onclick="openModal('MIT Chapter', 'Connecting with MIT Chapter Lead...')" class="px-3 py-1 rounded-lg bg-brand-violet/20 text-brand-violet hover:bg-brand-violet hover:text-white text-xs font-semibold">Join Chapter</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-white/5 transition">
+              <td class="p-4 font-bold text-slate-300">#03</td>
+              <td class="p-4 text-white font-bold font-sans flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-brand-magenta/20 text-brand-magenta flex items-center justify-center font-mono font-bold">IIT</div>
+                IIT Bombay Tech Club
+              </td>
+              <td class="p-4 text-slate-300">1,890 Builders</td>
+              <td class="p-4 text-emerald-400 font-bold">29 First Place Wins</td>
+              <td class="p-4">
+                <button onclick="openModal('IIT Bombay Chapter', 'Connecting with IIT Bombay Chapter Lead...')" class="px-3 py-1 rounded-lg bg-brand-magenta/20 text-brand-magenta hover:bg-brand-magenta hover:text-white text-xs font-semibold">Join Chapter</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- PAGE 5: IDEAS (CO-FOUNDER & PROBLEM STATEMENT BOARD) -->
+  <!-- ================================================================= -->
+  <main id="page-ideas" class="page-view hidden relative z-10 max-w-7xl mx-auto px-6 pt-8 pb-20 flex-1 w-full">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+      <div>
+        <span class="text-xs font-mono px-3 py-1 rounded-full bg-brand-magenta/20 border border-brand-magenta/40 text-brand-magenta tracking-wider font-semibold uppercase">
+          05 • IDEA BOARD
+        </span>
+        <h1 class="font-syne text-4xl sm:text-6xl font-extrabold text-white mt-3">GREAT IDEAS NEED BUILDERS</h1>
+      </div>
+      <button onclick="openModal('Post Problem Statement', 'Post your problem statement to recruit student teams.')" class="px-5 py-3 rounded-xl bg-gradient-to-r from-brand-violet to-brand-magenta text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg">
+        + Post Problem Statement
+      </button>
+    </div>
+
+    <div class="space-y-4">
+      
+      <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-brand-cyan/20 text-brand-cyan font-bold">AI + EDUCATION</span>
+            <span class="text-xs text-slate-400 font-mono">Posted by Stanford Health Lab</span>
+          </div>
+          <h3 class="font-syne text-xl font-bold text-white">Automated Medical Paper Summarizer for Research Students</h3>
+          <p class="text-xs text-slate-400 max-w-2xl">Parsing PubMed papers into structured interactive mindmaps with citation verification.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="incrementUpvote(this)" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-brand-cyan text-slate-200 font-mono text-xs font-bold flex items-center gap-2">
+            <i class="fa-solid fa-arrow-up text-brand-cyan"></i> <span class="upvote-count">241</span>
+          </button>
+          <button onclick="openModal('Apply as Co-builder', 'Submit your portfolio to team up on Medical Paper Summarizer.')" class="px-4 py-2 rounded-xl bg-brand-cyan text-slate-950 font-mono text-xs font-bold uppercase">
+            Build This
+          </button>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-brand-violet/20 text-brand-violet font-bold">HARDWARE + IOT</span>
+            <span class="text-xs text-slate-400 font-mono">Posted by MIT Energy Club</span>
+          </div>
+          <h3 class="font-syne text-xl font-bold text-white">Smart Campus Grid Power Management Dashboard</h3>
+          <p class="text-xs text-slate-400 max-w-2xl">Real-time solar panel monitoring across university dorms using low-cost ESP32 microcontrollers.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="incrementUpvote(this)" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-brand-violet text-slate-200 font-mono text-xs font-bold flex items-center gap-2">
+            <i class="fa-solid fa-arrow-up text-brand-violet"></i> <span class="upvote-count">189</span>
+          </button>
+          <button onclick="openModal('Apply as Co-builder', 'Submit your portfolio to team up on Smart Campus Grid.')" class="px-4 py-2 rounded-xl bg-brand-violet text-white font-mono text-xs font-bold uppercase">
+            Build This
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- PAGE 6: PEOPLE (TALENT DIRECTORY & DEVELOPER MATCHMAKING) -->
+  <!-- ================================================================= -->
+  <main id="page-people" class="page-view hidden relative z-10 max-w-7xl mx-auto px-6 pt-8 pb-20 flex-1 w-full">
+    <div class="mb-10">
+      <span class="text-xs font-mono px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan tracking-wider font-semibold uppercase">
+        06 • BUILDER DIRECTORY
+      </span>
+      <h1 class="font-syne text-4xl sm:text-6xl font-extrabold text-white mt-3">FIND YOUR TEAMMATES</h1>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Builder Card 1 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4 relative group">
+        <div class="flex items-center gap-4">
+          <img class="w-14 h-14 rounded-2xl object-cover border-2 border-brand-cyan shadow-md" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" alt="Elena">
+          <div>
+            <h3 class="font-syne text-lg font-bold text-white">Elena Rostova</h3>
+            <p class="text-xs text-slate-400 font-mono">Stanford • Senior</p>
+            <span class="text-[10px] font-mono text-emerald-400 font-semibold"><i class="fa-solid fa-check"></i> 14 Hackathon Wins</span>
+          </div>
+        </div>
+
+        <p class="text-slate-300 text-xs">Specialized in Rust memory safety, Gemini 3 API integrations, and autonomous LLM agents.</p>
+
+        <div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+          <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">Rust</span>
+          <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">Python</span>
+          <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">PyTorch</span>
+        </div>
+
+        <button onclick="openModal('Recruit Elena Rostova', 'Sending team invite message to Elena...')" class="w-full py-2.5 rounded-xl bg-brand-cyan/10 hover:bg-brand-cyan hover:text-slate-950 text-brand-cyan font-mono text-xs font-bold uppercase transition border border-brand-cyan/30">
+          Invite To Team
+        </button>
+      </div>
+
+      <!-- Builder Card 2 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4 relative group">
+        <div class="flex items-center gap-4">
+          <img class="w-14 h-14 rounded-2xl object-cover border-2 border-brand-violet shadow-md" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80" alt="Alex">
+          <div>
+            <h3 class="font-syne text-lg font-bold text-white">Alex Kumar</h3>
+            <p class="text-xs text-slate-400 font-mono">MIT • Junior</p>
+            <span class="text-[10px] font-mono text-brand-cyan font-semibold"><i class="fa-solid fa-check"></i> Backend Specialist</span>
+          </div>
+        </div>
+
+        <p class="text-slate-300 text-xs">Distributed systems engineer focused on high-throughput Go microservices and Kubernetes setup.</p>
+
+        <div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+          <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">Go</span>
+          <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">Docker</span>
+          <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">PostgreSQL</span>
+        </div>
+
+        <button onclick="openModal('Recruit Alex Kumar', 'Sending team invite message to Alex...')" class="w-full py-2.5 rounded-xl bg-brand-violet/20 hover:bg-brand-violet text-brand-violet hover:text-white font-mono text-xs font-bold uppercase transition border border-brand-violet/40">
+          Invite To Team
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- PAGE 7: HACKATHONS (ACTIVE ARENA COMPETITIONS & PRIZES) -->
+  <!-- ================================================================= -->
+  <main id="page-hackathons" class="page-view hidden relative z-10 max-w-7xl mx-auto px-6 pt-8 pb-20 flex-1 w-full">
+    <div class="mb-10">
+      <span class="text-xs font-mono px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan tracking-wider font-semibold uppercase">
+        07 • ARENA COMPETITIONS
+      </span>
+      <h1 class="font-syne text-4xl sm:text-6xl font-extrabold text-white mt-3">ACTIVE & UPCOMING HACKATHONS</h1>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Hackathon 1 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4 border-l-4 border-l-emerald-400">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            LIVE REGISTRATION
+          </span>
+          <span class="text-xs font-mono text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Ends in 4d 18h</span>
+        </div>
+
+        <h2 class="font-syne text-2xl font-bold text-white">Global Student AI & Agentic Hackathon '26</h2>
+        <p class="text-slate-300 text-xs leading-relaxed">Build next-gen autonomous workflow agents, multimodal AI search engines, or AI code auditors.</p>
+
+        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="flex justify-between text-xs font-mono">
+            <span class="text-slate-400">Total Prize Pool</span>
+            <span class="text-white font-bold">$45,000 USD</span>
+          </div>
+          <div class="flex justify-between text-xs font-mono">
+            <span class="text-slate-400">Registered Hacker Squads</span>
+            <span class="text-brand-cyan font-bold">1,840 / 2,000</span>
+          </div>
+        </div>
+
+        <button onclick="openModal('Global AI Hackathon', 'Redirecting to squad registration portal...')" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-blue text-slate-950 font-mono text-xs font-bold uppercase tracking-wider">
+          Register Squad Now
+        </button>
+      </div>
+
+      <!-- Hackathon 2 -->
+      <div class="glass-card rounded-2xl p-6 space-y-4 border-l-4 border-l-brand-violet">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-brand-violet/20 text-brand-violet border border-brand-violet/40">
+            UPCOMING • STARTS NOV 15
+          </span>
+          <span class="text-xs font-mono text-slate-400"><i class="fa-regular fa-calendar mr-1"></i> 36 Hours Duration</span>
+        </div>
+
+        <h2 class="font-syne text-2xl font-bold text-white">Campus Hardware & IoT Sprint</h2>
+        <p class="text-slate-300 text-xs leading-relaxed">Build smart sensor hardware, campus energy monitors, or embedded robotics using open hardware specs.</p>
+
+        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="flex justify-between text-xs font-mono">
+            <span class="text-slate-400">Total Prize Pool</span>
+            <span class="text-white font-bold">$20,000 USD</span>
+          </div>
+          <div class="flex justify-between text-xs font-mono">
+            <span class="text-slate-400">Hardware Kits Provided</span>
+            <span class="text-brand-violet font-bold">500 Free ESP32 Kits</span>
+          </div>
+        </div>
+
+        <button onclick="openModal('Hardware Sprint', 'Pre-registering for free hardware starter kit...')" class="w-full py-3 rounded-xl bg-brand-violet text-white font-mono text-xs font-bold uppercase tracking-wider">
+          Pre-Register Team
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- PAGE 8: LOGIN (AUTHENTICATION ARENA FORM WITH CAPTCHA) -->
+  <!-- ================================================================= -->
+  <main id="page-login" class="page-view hidden relative z-10 max-w-7xl mx-auto px-6 pt-6 pb-20 flex-1 w-full flex items-center justify-center">
+    <div class="w-full max-w-md glass-card rounded-3xl p-8 border border-slate-700 shadow-2xl relative space-y-6">
+      
+      <div class="text-center space-y-2">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-cyan to-brand-violet p-[1px] mx-auto shadow-lg shadow-brand-cyan/20">
+          <div class="w-full h-full bg-[#070913] rounded-[15px] flex items-center justify-center">
+            <span class="font-syne text-xl font-bold text-brand-cyan">CC</span>
+          </div>
+        </div>
+        <h2 class="font-syne text-3xl font-extrabold text-white uppercase tracking-tight">ENTER THE ARENA</h2>
+        <p class="text-xs text-slate-400 font-mono">Sign in with your campus developer profile</p>
+      </div>
+
+      <form onsubmit="handleLogin(event)" class="space-y-4 text-xs font-mono">
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">CAMPUS / GITHUB EMAIL</label>
+          <input type="email" required placeholder="builder@stanford.edu" class="w-full p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">PASSWORD</label>
+          <input type="password" required placeholder="••••••••••••" class="w-full p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan">
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-slate-300 font-semibold">SECURITY CAPTCHA</label>
+            <span id="captchaCode" class="text-brand-cyan font-bold tracking-widest bg-slate-900 px-3 py-1 rounded border border-slate-700 font-mono text-sm"></span>
+          </div>
+          <input type="text" id="captchaInput" required placeholder="Enter captcha code" class="w-full p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan">
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-cyan via-brand-blue to-brand-violet text-slate-950 font-bold font-mono text-xs uppercase tracking-wider shadow-lg shadow-brand-cyan/20">
+          Authenticate Profile
+        </button>
+      </form>
+
+      <div class="relative flex py-1 items-center">
+        <div class="flex-grow border-t border-slate-800"></div>
+        <span class="flex-shrink mx-4 text-slate-500 font-mono text-[10px] uppercase">Or Sign In With</span>
+        <div class="flex-grow border-t border-slate-800"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 font-mono text-xs">
+        <button onclick="openModal('GitHub Auth', 'Connecting to GitHub OAuth service...')" class="py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold flex items-center justify-center gap-2">
+          <i class="fa-brands fa-github text-sm"></i> GitHub
+        </button>
+        <button onclick="openModal('Google Auth', 'Connecting to Google OAuth service...')" class="py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold flex items-center justify-center gap-2">
+          <i class="fa-brands fa-google text-sm"></i> Google
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 bg-[#05070e] relative z-10 py-10 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-xs">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-cyan to-brand-violet p-[1px]">
+          <div class="w-full h-full bg-[#070913] rounded-[7px] flex items-center justify-center">
+            <span class="font-syne text-xs font-bold text-brand-cyan">CC</span>
+          </div>
+        </div>
+        <span class="text-slate-400">CampusCode Ecosystem © 2026</span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-slate-400">
+        <button onclick="showSection('home')" class="hover:text-brand-cyan transition">Home</button>
+        <button onclick="showSection('products')" class="hover:text-brand-cyan transition">Products</button>
+        <button onclick="showSection('innovation')" class="hover:text-brand-cyan transition">Innovation</button>
+        <button onclick="showSection('community')" class="hover:text-brand-cyan transition">Community</button>
+        <button onclick="showSection('hackathons')" class="hover:text-brand-cyan transition">Hackathons</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- REUSABLE DYNAMIC MODAL -->
+  <div id="modalOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 transition duration-300">
+    <div class="glass-card max-w-md w-full p-6 rounded-2xl border border-slate-700 relative shadow-2xl animate-float">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-brand-cyan/20 text-brand-cyan flex items-center justify-center">
+          <i class="fa-solid fa-atom text-xl"></i>
+        </div>
+        <h3 id="modalTitle" class="text-xl font-bold text-white font-syne">Modal Title</h3>
+      </div>
+
+      <p id="modalBody" class="text-slate-300 text-xs leading-relaxed mb-6 font-mono">
+        Modal body text details go here...
+      </p>
+
+      <div class="flex justify-end gap-3 font-mono text-xs">
+        <button onclick="closeModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold">
+          Close
+        </button>
+        <button onclick="closeModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-blue text-slate-950 font-bold uppercase">
+          Confirm Action
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT FOR SPA NAVIGATION & INTERACTIVITY -->
+  <script>
+    // Navigation Page Switching
+    function showSection(sectionId) {
+      // Hide all page sections
+      document.querySelectorAll('.page-view').forEach(page => {
+        page.classList.add('hidden');
+      });
+
+      // Show target page
+      const target = document.getElementById(`page-${sectionId}`);
+      if (target) {
+        target.classList.remove('hidden');
+      }
+
+      // Update Nav pill active indicators
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      const activeNav = document.getElementById(`nav-${sectionId}`);
+      if (activeNav) {
+        activeNav.classList.add('active');
+      }
+
+      // Generate Captcha if Login page
+      if (sectionId === 'login') {
+        generateCaptcha();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Mobile Navigation Toggle
+    function toggleMobileNav() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Interactive 3D Cube Pulse Effect
+    function triggerCubePulse() {
+      const cube = document.getElementById('heroCube');
+      cube.style.transform = 'scale(1.3) rotateX(45deg) rotateY(180deg)';
+      setTimeout(() => {
+        cube.style.transform = '';
+      }, 600);
+    }
+
+    // Modal Controls
+    function openModal(title, body) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalBody').innerText = body;
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+    }
+
+    function closeModal() {
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.add('hidden');
+      overlay.classList.remove('flex');
+    }
+
+    // Upvote Counter Logic
+    function incrementUpvote(button) {
+      const countSpan = button.querySelector('.upvote-count');
+      if (countSpan) {
+        let current = parseInt(countSpan.innerText);
+        countSpan.innerText = current + 1;
+        button.classList.add('text-brand-cyan');
+      }
+    }
+
+    // Captcha Generator for Login
+    let currentCaptcha = '';
+    function generateCaptcha() {
+      currentCaptcha = Math.floor(1000 + Math.random() * 9000).toString();
+      const captchaEl = document.getElementById('captchaCode');
+      if (captchaEl) {
+        captchaEl.innerText = currentCaptcha;
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('captchaInput').value;
+      if (input === currentCaptcha) {
+        openModal('Authentication Success', 'Welcome back builder! Redirecting to dashboard...');
+        setTimeout(() => {
+          closeModal();
+          showSection('home');
+        }, 1500);
+      } else {
+        openModal('Security Alert', 'Invalid CAPTCHA code entered. Please try again.');
+        generateCaptcha();
+      }
+    }
+
+    // Live Commits Counter Dynamic Increment
+    setInterval(() => {
+      const counter = document.getElementById('commitCounter');
+      if (counter) {
+        let val = parseInt(counter.innerText.replace(',', ''));
+        val += Math.floor(Math.random() * 3) + 1;
+        counter.innerText = val.toLocaleString();
+      }
+    }, 3000);
+  </script>
+</body>
+</html>
+```eof
